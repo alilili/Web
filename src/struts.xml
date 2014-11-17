@@ -9,6 +9,5 @@
 	 	<action name="show" class="action">
 	 		<result>/show.jsp</result>
 	 	</action>
-	 	<action></action>
      </package>
 </struts>
