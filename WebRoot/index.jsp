@@ -11,15 +11,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>主页</title>
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <script type="text/javascript">
-    	function query(){
-    		window.open("show");
+    	function query(elem){
+    		var param = elem.name;
+    		window.open("show?query="+param);
+    	}
+    	function query1(elem){
+    		window.open("shownew");
     	}
     </script>
   </head>
   
   <body>
     <div id="main">
-    	<input type="button" value="主机1" onclick="query()"/>
+    	<input type="button" name="server" value="测试环境" onclick="query(this)"/>
+    	<input type="button" name="server" value="测试环境2" onclick="query1(this)"/>
+    	
     </div>
   </body>
 </html>

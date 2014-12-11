@@ -11,12 +11,21 @@
            http://www.springframework.org/schema/tx 
            http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
-	<!-- 声明SYS_MSG类 -->
-	<bean id="sys_msg" class="msg.SYS_MSG"/>
 	
+	<!-- 声明 ClientSocket类-->
+	<bean id="clientSocket" class="client.ClientSocket"/>
+	<!-- 声明NetServerImpl-->
+	<bean id="netServerImpl" class="serverimpl.NetServerImpl">
+		<property name="clientSocket" ref="clientSocket"/>
+	</bean>
+	<!-- 声明DiskServerImpl -->
+	<bean id="diskServerImpl" class="serverimpl.DiskServerImpl">
+		<property name="clientSocket" ref="clientSocket"/>
+	</bean>
     <!-- struts2的action的配置 -->
     <bean id = "action" class="action.BaseAction">
-        <property name="sys_msg" ref="sys_msg"/>
+        <property name="netServer" ref="netServerImpl"/>
+        <property name="diskServer" ref="diskServerImpl"/>
     </bean>
  
 </beans>

@@ -9,6 +9,8 @@
 	 	<action name="show" class="action">
 	 		<result>/show.jsp</result>
 	 	</action>
-	 	<action></action>
+	 	<action name="shownew" class="action">
+	 		<result>/newfile.jsp</result>
+	 	</action>
      </package>
 </struts>

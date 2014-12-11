@@ -1,12 +1,63 @@
 package msg;
 
+import java.util.List;
+
 public class SYS_MSG {
-	public String disk;//ç£ç›˜ç©ºé—´
-	public String netstatus;//ç½‘ç»œçŠ¶æ€
-	public String address;//ip:port
-	public String appStatus;//åº”ç”¨çŠ¶æ€
-	public String sysResource;//ç³»ç»Ÿèµ„æº
-	public String dbStatus;//æ•°æ®åº“çŠ¶æ€
-	public String backup;//å¤‡ä»½æƒ…å†µ
-	public int flag;
+	private List<DiskMsg> disk;//´ÅÅÌ¿Õ¼ä
+	private String hostname;//Ö÷»úÃû³Æ
+	private String netstatus;//ÍøÂç×´Ì¬
+	private List<String[]> checkstatus;//¼ì²â·şÎñÆ÷µÄÇé¿ö
+	private String appStatus;//Ó¦ÓÃ×´Ì¬
+	private String sysResource;//ÏµÍ³×ÊÔ´
+	private String dbStatus;//Êı¾İ¿â×´Ì¬
+	private String backup;//±¸·İÇé¿ö
+
+	public List<DiskMsg> getDisk() {
+		return disk;
+	}
+	public void setDisk(List<DiskMsg> disk) {
+		this.disk = disk;
+	}
+	public String getHostname() {
+		return hostname;
+	}
+	public void setHostname(String hostname) {
+		this.hostname = hostname;
+	}
+	public String getNetstatus() {
+		return netstatus;
+	}
+	public void setNetstatus(String netstatus) {
+		this.netstatus = netstatus;
+	}
+	public List<String[]> getCheckstatus() {
+		return checkstatus;
+	}
+	public void setCheckstatus(List<String[]> checkstatus) {
+		this.checkstatus = checkstatus;
+	}
+	public String getAppStatus() {
+		return appStatus;
+	}
+	public void setAppStatus(String appStatus) {
+		this.appStatus = appStatus;
+	}
+	public String getSysResource() {
+		return sysResource;
+	}
+	public void setSysResource(String sysResource) {
+		this.sysResource = sysResource;
+	}
+	public String getDbStatus() {
+		return dbStatus;
+	}
+	public void setDbStatus(String dbStatus) {
+		this.dbStatus = dbStatus;
+	}
+	public String getBackup() {
+		return backup;
+	}
+	public void setBackup(String backup) {
+		this.backup = backup;
+	}
 }

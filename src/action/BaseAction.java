@@ -1,44 +1,72 @@
 package action;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+
+import msg.DiskMsg;
+import msg.NetStatus;
+import msg.SYS_MSG;
 
 import org.apache.struts2.interceptor.RequestAware;
 
-import test.Test;
-import msg.SYS_MSG;
+import server.DiskServer;
+import server.NetServer;
+import tools.XMLRead;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 public class BaseAction extends ActionSupport implements RequestAware{
-	//å£°æ˜Mapç±»å‹çš„session
+	private static final long serialVersionUID = 1L;
+	//ÉùÃ÷MapÀàĞÍµÄsession
 	private Map<String, Object> request;
-	//ä¿¡æ¯é›†åˆç±»ï¼Œå­˜å‚¨éœ€è¦æ˜¾ç¤ºçš„ä¿¡æ¯
-	private SYS_MSG sys_msg;
-	//ç›¸åº”çš„getå’Œsetæ–¹æ³•
-	public SYS_MSG getSys_msg() {
-		return sys_msg;
+	//ÉùÃ÷ÍøÂçĞÅÏ¢·şÎñÀà
+	private NetServer netServer;
+	//ÉùÃ÷´ÅÅÌ²éÑ¯·şÎñÀà
+	private DiskServer diskServer;
+	//ÏàÓ¦µÄgetºÍset·½·¨
+	public NetServer getNetServer() {
+		return netServer;
 	}
-	public void setSys_msg(SYS_MSG sys_msg) {
-		this.sys_msg = sys_msg;
+	public void setNetServer(NetServer netServer) {
+		this.netServer = netServer;
 	}
 	
+	public DiskServer getDiskServer() {
+		return diskServer;
+	}
+	public void setDiskServer(DiskServer diskServer) {
+		this.diskServer = diskServer;
+	}
 	@Override
 	public void setRequest(Map<String, Object> request) {
 		this.request = request;
 	}
 	
-	//é»˜è®¤æ–¹æ³•
-	public String execute(){
-		sys_msg.disk = "1000G";
-		sys_msg.address = "172.16.111.68:8080";
-		sys_msg.appStatus = "è‰¯å¥½";
-		sys_msg.sysResource="80%";
-		sys_msg.dbStatus = "up";
-		sys_msg.backup = "æ— ";
-		sys_msg.flag = Test.flag;
-		request.put("message", sys_msg);	
-		Test.flag++;
+	//Ä¬ÈÏ·½·¨
+	public String execute() throws UnknownHostException, IOException{
+		List<SYS_MSG> list = new ArrayList<SYS_MSG>();
+		List<String> server = XMLRead.getAllServer();
+		Iterator<String> iterator = server.iterator();	
+		while(iterator.hasNext()){
+			SYS_MSG sys_msg = new SYS_MSG();
+			String nserver = iterator.next();
+			NetStatus ns = netServer.getNetInfo(nserver);
+			List<DiskMsg> dlist = diskServer.getInfo(nserver);
+			sys_msg.setDisk(dlist);
+			sys_msg.setHostname(ns.getHostname());
+			sys_msg.setNetstatus(ns.getResult());
+			sys_msg.setCheckstatus(ns.getIplist());
+			sys_msg.setAppStatus("Á¼ºÃ");
+			sys_msg.setSysResource("80%");
+			sys_msg.setDbStatus("up");
+			sys_msg.setBackup("ÎŞ");
+			list.add(sys_msg);
+		}
+		request.put("result",list);
 		return SUCCESS;
 	}
-	
 }
